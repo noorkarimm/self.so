@@ -9,6 +9,10 @@ import PlausibleProvider from 'next-plausible';
 
 const mono = JetBrains_Mono({ subsets: ['latin'] });
 
+if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+  throw new Error('Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY');
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://self.so'),
   title: 'Self.so - Resume to Website',
@@ -25,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <PlausibleProvider domain="self.so">
         <ReactQueryClientProvider>
           <html lang="en">
